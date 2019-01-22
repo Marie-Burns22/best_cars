@@ -12,13 +12,15 @@ class BestCars::Scraper
     car_array = doc.css('table#bestcars').css('tbody')
     
     car_array.each do |car_row|
-    car = {
-      model:  car_row.css('div.desc a').text
-      epa_class: car_row.css('th.vclass').text
-      mpg: car_row.css('td.auto-mpg').text
-      fuel_type: car_row.css('button').children.text
+    attributes = {
+      model:  car_row.css('div.desc a').text,
+      epa_class: car_row.css('th.vclass').text,
+      mpg: car_row.css('td.auto-mpg').text,
+      fuel_type: car_row.css('button').children.text,
       url:
     }
+    
+    Car.new(attributes)
     
     
     binding.pry
