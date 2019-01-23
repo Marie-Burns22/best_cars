@@ -16,10 +16,13 @@ class BestCars::Scraper
         epa_class: car_row.css('th.vclass').text,
         mpg: car_row.css('td.auto-mpg').text,
         fuel_type: car_row.css('button').children.text,
-        url: car_row.css('div.desc a')[0].attributes['href'].value
+        url: car_row.css('div.desc a')[0].attributes['href'].value  #the volvo does not have a type since it is a gas car. need to add code to return "gasoline"
       }
-    
+  
+  #the 2 BMW cars are returning on the same line.
+  
       car = BestCars::Car.new(car_attributes)
+      binding.pry
       end
   end
   
