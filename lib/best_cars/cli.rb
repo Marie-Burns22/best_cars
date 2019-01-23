@@ -25,6 +25,7 @@ class BestCars::CLI
       puts "The epa class is: #{selected_car.epa_class}."
       puts "The fuel type is: #{selected_car.fuel_type}."
       
+      get_more_info(selected_car.url)
       
       # call another input method in the cli that either calls the second scraper method with the selected car url or asks if they would like to select another car or exit.
     else
@@ -33,13 +34,23 @@ class BestCars::CLI
     end
   end
   
-  def get_more_info(selected_car.url)
+  def get_more_info(selected_car_url)
     puts "Would you like to know about the range and annual fuel cost of this car?"
     input = gets.strip.upcase
-    until input == "Y" || input == "YES" || input == "N" || input == "NO"
+    until [ "Y", "YES", "N", "NO"].include?(input)
       puts "Please enter Y or N."
-      get_more_info
+      input = gets.strip.upcase
     end
-    if input == "N" || input == "NO"
-      #call exit or next car method
+    if input == "Y" || input == "YES"
+      BestCars::Scraper.scrape_range_cost(selected_car_url)
+    else
+      puts "You ended the program"
+    end
+  end
+  
+  def exit_or_restart
+    
+  end
+  
+  
 end  

@@ -16,17 +16,19 @@ class BestCars::Scraper
         epa_class: car_row.css('th.vclass').text,
         mpg: car_row.css('td.auto-mpg').text,
         fuel_type: car_row.css('button').children.text,
-        url: car_row.css('div.desc a')[0].attributes['href'].value  #the volvo does not have a type since it is a gas car. need to add code to return "gasoline"
+        url: "https://www.fueleconomy.gov" + car_row.css('div.desc a')[0].attributes['href'].value  #the volvo does not have a type since it is a gas car. need to add code to return "gasoline"
       }
   
-  #the 2 BMW cars are returning on the same line.
+         #the 2 BMW cars are returning on the same line.
   
       car = BestCars::Car.new(car_attributes)
       binding.pry
       end
   end
   
-  def scrape_car_info(car_URL)
+  def self.scrape_range_cost(selected_car_url)
+    doc = Nokogiri::HTML(open)
+    puts "#{selected_car_url}"
   # 1 second level to get range and emissions and other data
   # called based on user input. takes an argument of the car URL.
   end
