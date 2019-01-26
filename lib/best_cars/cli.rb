@@ -22,7 +22,6 @@ class BestCars::CLI
     puts "Choose the number car you want more information about."
     puts "\n"
     print "> "
-    puts "\n"
     
     input = gets.strip
     index = input.to_i - 1
@@ -35,7 +34,9 @@ class BestCars::CLI
     
     selected_car =  BestCars::Car.all[index]
     puts "\n"
+    puts "______________________________________"
     puts "#{selected_car.model} information:"
+    puts "______________________________________"
     puts "MPG: #{selected_car.mpg}"
     puts "EPA class: #{selected_car.epa_class}"
     puts "The fuel type is: #{selected_car.fuel_type}"
@@ -43,8 +44,6 @@ class BestCars::CLI
       
     get_more_info(selected_car.url)
     
-    exit_or_restart
-  
   end
   
   def get_more_info(selected_car_url)
@@ -55,11 +54,8 @@ class BestCars::CLI
       puts "Please enter Y or N."
       input = gets.strip.upcase
     end
-    if input == "Y" || input == "YES"
-      BestCars::Scraper.scrape_range_cost(selected_car_url)
-    else
-      exit_or_restart
-    end
+    BestCars::Scraper.scrape_range_cost(selected_car_url) if input == "Y" || input == "YES"
+    exit_or_restart
   end
   
   def exit_or_restart
