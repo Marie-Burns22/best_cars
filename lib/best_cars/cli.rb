@@ -1,11 +1,12 @@
 class BestCars::CLI 
   
   def start 
+    puts "\n"
+    puts "------------------------------------------------"
     puts "Here are the top 8 fuel-efficient cars of 2019."
+    puts "------------------------------------------------"
+    puts "\n"
     BestCars::Scraper.scrape_cars
-    puts "Choose the number car you want more information about."
-    list_cars
-    
     select_car
   end
   
@@ -16,26 +17,39 @@ class BestCars::CLI
   end
   
   def select_car
+    list_cars
+    puts "\n"
+    puts "Choose the number car you want more information about."
+    puts "\n"
+    print "> "
+    puts "\n"
+    
     input = gets.strip
     index = input.to_i - 1
-    if index.between?(0, 9)
-      selected_car =  BestCars::Car.all[index]
-      puts "The model is #{selected_car.model}."
-      puts "The mpg is #{selected_car.mpg}."
-      puts "The epa class is: #{selected_car.epa_class}."
-      puts "The fuel type is: #{selected_car.fuel_type}."
-      
-      get_more_info(selected_car.url)
-      
-      # call another input method in the cli that either calls the second scraper method with the selected car url or asks if they would like to select another car or exit.
-    else
-      puts "Invalid choice. Choose a number between 1 and 10."
-      get_input
+    
+    until index.between?(0, 8)
+      puts "Invalid choice. Choose a number between 1 and 9."
+      input = gets.strip
+      index = input.to_i - 1
     end
+    
+    selected_car =  BestCars::Car.all[index]
+    puts "\n"
+    puts "#{selected_car.model} information:"
+    puts "MPG: #{selected_car.mpg}"
+    puts "EPA class: #{selected_car.epa_class}"
+    puts "The fuel type is: #{selected_car.fuel_type}"
+    puts "\n"
+      
+    get_more_info(selected_car.url)
+    
+    exit_or_restart
+  
   end
   
   def get_more_info(selected_car_url)
     puts "Would you like to know about the range and annual fuel cost of this car?"
+    print "> "
     input = gets.strip.upcase
     until [ "Y", "YES", "N", "NO"].include?(input)
       puts "Please enter Y or N."
@@ -44,12 +58,25 @@ class BestCars::CLI
     if input == "Y" || input == "YES"
       BestCars::Scraper.scrape_range_cost(selected_car_url)
     else
-      puts "You ended the program"
+      exit_or_restart
     end
   end
   
   def exit_or_restart
-    
+    puts "Would you like to choose another car?"
+    print "> "
+    input = gets.strip.upcase
+    until [ "Y", "YES", "N", "NO"].include?(input)
+      puts "Please enter Y or N."
+      input = gets.strip.upcase
+    end
+    if input == "Y" || input == "YES"
+      select_car
+    else
+      puts "\n"
+      puts "Thank you! Program ended."
+    end
+      
   end
   
   
