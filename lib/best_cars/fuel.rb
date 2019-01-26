@@ -27,6 +27,6 @@ attr_accessor :car, :range, :cost
   end
   
   def find_fuel_by_model(selected_car)
-    
+    self.all.each.include?(selected_car.model)
 end
   

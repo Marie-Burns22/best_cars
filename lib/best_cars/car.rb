@@ -1,6 +1,6 @@
 class BestCars::Car 
   attr_accessor :model, :epa_class, :mpg, :fuel_type, :url 
-  attr_reader :fuel
+  attr_reader :fuel_economy
   
   @@all = []
   
@@ -8,11 +8,16 @@ class BestCars::Car
     @@all 
   end
   
+  def self.save
+    @@all << self
+    self
+  end
+  
   def initialize(car_hash)
     car_hash.each do |attribute_name, attribute_value|
       self.send("#{attribute_name}=", attribute_value)
     end 
-    fuel
+    @fuel = []
     @@all << self
   end
   

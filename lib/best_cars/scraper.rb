@@ -32,12 +32,13 @@ class BestCars::Scraper
     doc = Nokogiri::HTML(open(selected_car.url))
     
     fuel_attributes = {
-      car: selected_car.model
+      car: selected_car
       range: doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.phevRange").text.delete(" miles Total Range")
       cost: doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.totalRange").text.delete(" miles Total Range")
     }
     
-    
+    fuel_object = BestCars::Fuel.new
+    selected_car.fuel_economy << fuel_object
     
   end
     
