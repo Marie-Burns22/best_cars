@@ -7,7 +7,7 @@ class BestCars::CLI
     puts "------------------------------------------------"
     puts "\n"
     BestCars::Scraper.scrape_cars
-    select_car
+    select_car_info
   end
   
   def list_cars
@@ -16,7 +16,7 @@ class BestCars::CLI
     end
   end
   
-  def select_car
+  def select_car_info
     list_cars
     puts "\n"
     puts "Choose the number car you want more information about."
@@ -33,7 +33,7 @@ class BestCars::CLI
     end
     
     selected_car = BestCars::Car.all[index]
-    BestCars::Car.list_car_info(index)
+    BestCars::Car.list_car_info(selected_car)
     get_more_info(selected_car)
   
   end
@@ -57,7 +57,7 @@ class BestCars::CLI
       puts "Please enter Y or N."
       input = gets.strip.upcase
     end
-    BestCars::Scraper.scrape_range_cost(selected_car) if input == "Y" || input == "YES"
+    BestCars::Fuel.list_range_cost(selected_car) if input == "Y" || input == "YES"
     exit_or_restart
   end
   
@@ -71,7 +71,7 @@ class BestCars::CLI
       input = gets.strip.upcase
     end
     if input == "Y" || input == "YES"
-      select_car
+      select_car_info
     else
       puts "\n"
       puts "Thank you! Program ended."

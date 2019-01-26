@@ -3,17 +3,30 @@ attr_accessor :car, :range, :cost
   
   @@all = []
   
+  def self.all
+    @@all
+  end
+  
   def initialize(fuel_hash)
+    fuel_hash.each do |attribute_key, attribute_value|
+      self.send("#{attribute_key}=", attribute_value)
+    end
+    
+    @@all << self
     
   end
   
-  def list_range_fuel
+  def list_range_cost(selected_car)
+    fuel = find_fuel_by_model(selected_car)
+    
     puts "\n"
-    puts "Total range: #{doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.phevRange").text.delete(" miles Total Range")}#{doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.totalRange").text.delete(" miles Total Range")} miles"
+    puts "Total range: #{fuel.range} miles"
     puts "\n"
-    puts "Annual fuel cost for both electricity and gasoline: #{doc.css("div.yui-content div#tab1 table tr td.sbsEconData")[0].text.delete("Electricity + Gasoline: ")}"
+    puts "Annual fuel cost for both electricity and gasoline: #{fuel.cost}"
     puts "\n"
   end
   
+  def find_fuel_by_model(selected_car)
+    
 end
   

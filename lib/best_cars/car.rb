@@ -16,8 +16,7 @@ class BestCars::Car
     @@all << self
   end
   
-  def list_car_info(index)
-    selected_car = self.all[index]
+  def list_car_info(selected_car)
     puts "\n"
     puts "______________________________________"
     puts "#{selected_car.model} information:"
@@ -26,8 +25,6 @@ class BestCars::Car
     puts "EPA class: #{selected_car.epa_class}"
     puts "The fuel type is: #{selected_car.fuel_type}"
     puts "\n"
-      
-    get_more_info(selected_car)
   end
   
 end
