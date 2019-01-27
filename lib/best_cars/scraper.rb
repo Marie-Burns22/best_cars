@@ -8,8 +8,6 @@ class BestCars::Scraper
     
     car_array.each do |car_row|
       
-      fuel = nil
-      
       if car_row.css('button').children.text == ""
         fuel = "Gasoline"
       else
@@ -31,15 +29,24 @@ class BestCars::Scraper
   def self.scrape_range_cost(selected_car)
     doc = Nokogiri::HTML(open(selected_car.url))
     
+    if doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.phevRange").text.delete(" miles Total Range") == ""
+      range_type = "total"
+    else
+      range_type = "phev"
+    end
+    
     fuel_attributes = {
       car: selected_car,
-      range: doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.phevRange").text.delete(" miles Total Range"),
-      cost: doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.totalRange").text.delete(" miles Total Range")
+      range: doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.#{range_type}Range").text.delete(" miles Total Range"), 
+      cost: doc.css("div.yui-content div#tab1 table tr td.sbsEconData")[0].text.delete("Electricity + Gasoline: ")
     }
     
     fuel_object = BestCars::Fuel.new(fuel_attributes)
-    selected_car.fuel_economy = fuel_object
-    # binding.pry
+  binding.pry
+    selected_car.set_fuel_economy(fuel_object)
+    # selected_car.fuel_economy = fuel_object
+    selected_car
+    binding.pry
     
   end
     

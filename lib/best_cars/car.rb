@@ -1,6 +1,6 @@
 class BestCars::Car 
   attr_accessor :model, :epa_class, :mpg, :fuel_type, :url 
-  attr_reader :fuel_economy
+  attr_reader :fuel_object
   
   @@all = []
   
@@ -17,8 +17,13 @@ class BestCars::Car
     car_hash.each do |attribute_name, attribute_value|
       self.send("#{attribute_name}=", attribute_value)
     end 
-    @fuel_economy = nil
+    @fuel_object = nil
     @@all << self
+  end
+  
+  def self.set_fuel_economy(fuel_object)
+    @fuel_object = fuel_object
+    fuel_object.car = self
   end
   
   def self.list_car_info(selected_car)
@@ -33,13 +38,14 @@ class BestCars::Car
   end
   
   def self.list_range_cost(selected_car)
+    # if selected_car.fuel_object == nil
     BestCars::Scraper.scrape_range_cost(selected_car)
-    fuel = selected_car.fuel_economy
-    binding.pry
+    fuel = selected_car.fuel_object
+   
     puts "\n"
-    puts "Total range: #{fuel[range]} miles"
+    puts "Total range: #{fuel.range} miles"
     puts "\n"
-    puts "Annual fuel cost for both electricity and gasoline: #{fuel[cost]}"
+    puts "Annual fuel cost for both electricity and gasoline: #{fuel.cost}"
     puts "\n"
   end
 
