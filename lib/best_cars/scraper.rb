@@ -17,7 +17,7 @@ class BestCars::Scraper
       car_attributes = {
         model: car_row.css('div.desc a')[0].text.strip,
         epa_class: car_row.css('th.vclass').text,
-        mpg: car_row.css('td.auto-mpg').text,
+        mpg: car_row.css('td.auto-mpg')[0].text,
         fuel_type: fuel,
         url: "https://www.fueleconomy.gov" + car_row.css('div.desc a')[0].attributes['href'].value  #the volvo does not have a type since it is a gas car. need to add code to return "gasoline"
       }
@@ -42,11 +42,9 @@ class BestCars::Scraper
     }
     
     fuel_object = BestCars::Fuel.new(fuel_attributes)
-  binding.pry
+
     selected_car.set_fuel_economy(fuel_object)
-    # selected_car.fuel_economy = fuel_object
-    selected_car
-    binding.pry
+    
     
   end
     

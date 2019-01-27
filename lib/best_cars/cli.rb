@@ -1,13 +1,17 @@
 class BestCars::CLI 
   
   def start 
+    greeting
+    BestCars::Scraper.scrape_cars
+    select_car_info
+  end
+  
+  def greeting
     puts "\n"
     puts "------------------------------------------------"
     puts "Here are the top 8 fuel-efficient cars of 2019."
     puts "------------------------------------------------"
     puts "\n"
-    BestCars::Scraper.scrape_cars
-    select_car_info
   end
   
   def list_cars

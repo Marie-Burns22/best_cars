@@ -21,7 +21,7 @@ class BestCars::Car
     @@all << self
   end
   
-  def self.set_fuel_economy(fuel_object)
+  def set_fuel_economy(fuel_object)
     @fuel_object = fuel_object
     fuel_object.car = self
   end
