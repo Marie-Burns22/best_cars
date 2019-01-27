@@ -57,7 +57,7 @@ class BestCars::CLI
       puts "Please enter Y or N."
       input = gets.strip.upcase
     end
-    BestCars::Fuel.list_range_cost(selected_car) if input == "Y" || input == "YES"
+    BestCars::Car.list_range_cost(selected_car) if input == "Y" || input == "YES"
     exit_or_restart
   end
   

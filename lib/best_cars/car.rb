@@ -17,11 +17,11 @@ class BestCars::Car
     car_hash.each do |attribute_name, attribute_value|
       self.send("#{attribute_name}=", attribute_value)
     end 
-    @fuel = []
+    @fuel_economy = nil
     @@all << self
   end
   
-  def list_car_info(selected_car)
+  def self.list_car_info(selected_car)
     puts "\n"
     puts "______________________________________"
     puts "#{selected_car.model} information:"
@@ -32,4 +32,15 @@ class BestCars::Car
     puts "\n"
   end
   
+  def self.list_range_cost(selected_car)
+    BestCars::Scraper.scrape_range_cost(selected_car)
+    fuel = selected_car.fuel_economy
+    binding.pry
+    puts "\n"
+    puts "Total range: #{fuel[range]} miles"
+    puts "\n"
+    puts "Annual fuel cost for both electricity and gasoline: #{fuel[cost]}"
+    puts "\n"
+  end
+
 end
