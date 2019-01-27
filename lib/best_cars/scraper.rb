@@ -1,7 +1,7 @@
 class BestCars::Scraper
   
   def self.scrape_cars
-    cars = []
+    
     doc = Nokogiri::HTML(open("https://www.fueleconomy.gov/feg/best-worst.shtml"))
     
     car_array = doc.css('table#bestcars').css('tbody')
@@ -23,12 +23,14 @@ class BestCars::Scraper
       }
   
       car = BestCars::Car.new(car_attributes)
+      
     end
   end
   
   def self.scrape_range_cost(selected_car)
     doc = Nokogiri::HTML(open(selected_car.url))
     
+    #This conditional addresses the issue that the css selector is different depending on the type of car
     if doc.css("div.yui-content div#tab1 table tr td.sbsCellData div.rangeGraphic div.phevRange").text.delete(" miles Total Range") == ""
       range_type = "total"
     else
@@ -44,7 +46,6 @@ class BestCars::Scraper
     fuel_object = BestCars::Fuel.new(fuel_attributes)
 
     selected_car.set_fuel_economy(fuel_object)
-    
     
   end
     
