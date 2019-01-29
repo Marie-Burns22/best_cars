@@ -1,8 +1,6 @@
 # BestCars
 
-Welcome to your new gem! In this directory, you'll find the files you need to be able to package up your Ruby library into a gem. Put your Ruby code in the file `lib/best_cars`. To experiment with that code, run `bin/console` for an interactive prompt.
-
-TODO: Delete this and the text above, and describe your gem
+This program will scrape the fueleconomy.gov website to list the top 8 most fuel efficient cars by EPA class. It then asks the user to select a car for more information.  After the program returns information from the first level of the website, it asks the user if they would like additional information from another page about the fuel economy. The user can also select another car either after the first set of data is returned or after the additional data is returned.  If the user does not select a new car to view, the program exits. 
 
 ## Installation
 
@@ -22,7 +20,7 @@ Or install it yourself as:
 
 ## Usage
 
-TODO: Write usage instructions here
+To start the program, run ruby bin/best_cars. This will start the program and give you a list of cars.  Follow the prompts to select specific cars and request information about them. After information is listed, there will be a prompt asking if the user would like to select another car. The user can exit the program by inputing no.
 
 ## Development
 
