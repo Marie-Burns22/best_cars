@@ -23,15 +23,15 @@ class BestCars::CLI
   def select_car_info
     list_cars
     puts "\n"
-    puts "Choose the number car you want more information about."
+    puts "Select the number car you want more information about."
     puts "\n"
     print "Enter a number between 1 and 8 >  "
     
     number = gets.strip
     index = number.to_i - 1
     
-    until index.between?(0, 8)
-      puts "Invalid choice. Choose a number between 1 and 9."
+    until index.between?(0, 7)
+      puts "Invalid choice. Select a number between 1 and 8."
       number = gets.strip
       index = number.to_i - 1
     end
@@ -62,7 +62,7 @@ class BestCars::CLI
   
   def exit_or_restart
     puts "\n"
-    puts "Would you like to choose another car?"
+    puts "Would you like to select another car?"
     print "Enter Y or N > "
     
     input = gets.strip.upcase
