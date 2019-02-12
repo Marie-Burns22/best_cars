@@ -23,7 +23,7 @@ class BestCars::Scraper
       }
   
       car = BestCars::Car.new(car_attributes)
-      
+      fuel_type = BestCars::FuelType.new()
     end
   end
   
@@ -44,9 +44,7 @@ class BestCars::Scraper
     }
     
     fuel_object = BestCars::Fuel.new(fuel_attributes)
-
+    
     selected_car.set_fuel_economy(fuel_object)
-    
   end
-    
 end

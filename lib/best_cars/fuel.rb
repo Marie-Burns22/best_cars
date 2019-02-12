@@ -11,13 +11,7 @@ attr_accessor :car, :range, :cost
     fuel_attributes.each do |attribute_key, attribute_value|
       self.send("#{attribute_key}=", attribute_value)
     end
-    
     @@all << self
-    
   end
-  
-  
-  
-
 end
   

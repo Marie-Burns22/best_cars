@@ -37,11 +37,38 @@ class BestCars::CLI
     end
     
     selected_car = BestCars::Car.all[index]
-    BestCars::Car.list_car_info(selected_car)
+    list_car_info(selected_car)
     get_more_info(selected_car)
-  
   end
   
+  def list_car_info(selected_car)
+    puts "\n"
+    puts "--------------------------------------"
+    puts "#{selected_car.model} Information:"
+    puts "--------------------------------------"
+    puts "\n"
+    puts "MPG: #{selected_car.mpg}"
+    puts "EPA class: #{selected_car.epa_class}"
+    puts "The fuel type is: #{selected_car.fuel_type}"
+    puts "\n"
+    puts "--------------------------------------"
+  end
+  
+  def list_range_cost(selected_car)
+    BestCars::Scraper.scrape_range_cost(selected_car) if selected_car.fuel_object == nil
+    
+    fuel = selected_car.fuel_object
+    puts "\n"
+    puts "--------------------------------------"
+    puts "#{selected_car.model} Fuel Economy Information:"
+    puts "--------------------------------------"
+    puts "\n"
+    puts "Total range: #{fuel.range} miles"
+    puts "\n"
+    puts "Annual fuel cost for both electricity and gasoline: #{fuel.cost}"
+    puts "\n"
+    puts  "--------------------------------------"
+  end
   
   def get_more_info(selected_car)
     puts "Would you like to know about the range and annual fuel cost of this car?"
@@ -49,15 +76,13 @@ class BestCars::CLI
     print "Enter Y or N > "
     
     input = gets.strip.upcase
-    
     until [ "Y", "YES", "N", "NO"].include?(input)
       puts "Please enter Y or N >"
       input = gets.strip.upcase
     end
     
-    BestCars::Car.list_range_cost(selected_car) if input == "Y" || input == "YES"
+    list_range_cost(selected_car) if input == "Y" || input == "YES"
     exit_or_restart
-    
   end
   
   def exit_or_restart
@@ -66,7 +91,6 @@ class BestCars::CLI
     print "Enter Y or N > "
     
     input = gets.strip.upcase
-    
     until [ "Y", "YES", "N", "NO"].include?(input)
       puts "Please enter Y or N >"
       input = gets.strip.upcase
@@ -78,7 +102,5 @@ class BestCars::CLI
       puts "\n"
       puts "Thank you! You have exited the program."
     end
-      
   end
-  
 end  
